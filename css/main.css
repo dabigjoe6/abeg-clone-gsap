@@ -1,0 +1,39 @@
+body {
+  background: #0f292e;
+  color: white;
+  font-family: "Cerebri Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 100px;
+  padding-left: 100px;
+}
+
+.icon {
+  font-size: 30px;
+  font-style: italic;
+}
+
+.by {
+  font-size: 16px;
+  font-style: italic;
+}
+
+.by a {
+  text-decoration: none;
+  color: white;
+}
+
+.by a:hover, .by a:active {
+  color: #2d82c8;
+}
+
+.lines {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+}
