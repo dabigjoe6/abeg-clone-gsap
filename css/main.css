@@ -137,6 +137,7 @@ footer .dot {
   position: relative;
   bottom: 5px;
   z-index: 5;
+  font-size: 0px;
 }
 
 footer .dot::before{
@@ -173,7 +174,7 @@ footer .dot::after {
   border-style: solid;
   border-color: #32899A40;
   right: 10px;
-  bottom: 33px;
+  bottom: 30px;
   z-index: 1;
   transition: transform 0.5s, opacity 0.5s;
   transition-delay: 0.2s;
