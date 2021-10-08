@@ -139,7 +139,7 @@ footer .dot {
   z-index: 5;
 }
 
-footer .dot.active::before{
+footer .dot::before{
   height:   18px;
   width:  18px;
   display: inline-block;
@@ -152,9 +152,17 @@ footer .dot.active::before{
   right: 4px;
   bottom: 4px;
   z-index: 1;
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0;
+  transform: scale(0);
 }
 
-footer .dot.active::after {
+footer .dot.active::before{
+  opacity: 1;
+  transform: scale(1);
+}
+
+footer .dot::after {
   height: 30px;
   width: 30px;
   display: inline-block;
@@ -167,6 +175,15 @@ footer .dot.active::after {
   right: 10px;
   bottom: 33px;
   z-index: 1;
+  transition: transform 0.5s, opacity 0.5s;
+  transition-delay: 0.2s;
+  opacity: 0;
+  transform: scale(0);
+}
+
+footer .dot.active::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 
