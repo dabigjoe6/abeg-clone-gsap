@@ -36,4 +36,74 @@ header {
   position: fixed;
   top: -100px;
   left: -100px;
+  z-index: -100;
+}
+
+main {
+  padding-right: 100px;
+  padding-left: 100px;
+}
+
+.sections {
+  display: flex;
+  width: 100%;
+  max-height: 60vh;
+  min-height: 60vh;
+}
+
+.sections .content-wrapper {
+  flex: 1;
+}
+
+.sections .content-wrapper h1 {
+  font-size: 50px;
+  width: 80%;
+}
+
+.sections .content-wrapper p {
+  font-size: 20px;
+  width: 68%;
+  line-height: 40px;
+}
+
+.sections .section-image {
+  flex: 1;
+  min-height: 100%;
+}
+
+.section-1 .section-image .image-props {
+  position: relative;
+  min-height: 100%;
+}
+
+.section-1 .section-image .image-props img {
+  height: 160px;
+  width: auto;
+  position: absolute;
+
+}
+
+.section-1 .section-image .image-props .prop-1 {
+  top: 5px;
+  left: 0px;
+}
+
+.section-1 .section-image .image-props .prop-2 {
+  top: 5px;
+  right: 0px;
+}
+
+.section-1 .section-image .image-props .prop-3 {
+  bottom: 5px;
+  right: 0px;
+}
+
+.section-1 .section-image .image-props .prop-5 {
+  bottom: 5px;
+  left: 0px;
+}
+
+.section-1 .section-image .image-props .prop-4 {
+  top: 40%;
+  right: 40%;
 }
