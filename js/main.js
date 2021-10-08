@@ -10,7 +10,18 @@ const init = () => {
     1: 5,
   };
 
+  const progressMap = {
+    0: '0%',
+    0.2: '17%',
+    0.4: '34%',
+    0.6: '51%',
+    0.8: '68%',
+    1: '85%',
+  };
+
   const dots = document.querySelectorAll(".dot");
+  const progressEl = document.querySelector('.footer-progress');
+
   let currentActiveDot = 0;
 
 
@@ -43,7 +54,7 @@ const init = () => {
     pin: true,
     start: "top top",
     end: "bottom bottom",
-    scrub: true,
+    scrub: 0.1,
     markers: true,
     pinSpacing: false,
     anticipatePin: 1,
@@ -51,6 +62,7 @@ const init = () => {
     onUpdate: (update) => {
       if (update.progress in activeMap) {
         setActiveDot(update.progress);
+        setProgress(update.progress);
       }
     },
   });
@@ -63,6 +75,10 @@ const init = () => {
     //add active class to updated current dot
     dots[currentActiveDot].classList.add("active");
   };
+
+  const setProgress = (progress) => {
+    progressEl.style.width = progressMap[progress];
+  }
 };
 
 initGsap = init();
