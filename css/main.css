@@ -56,12 +56,13 @@ main {
 }
 
 .sections .content-wrapper h1 {
-  font-size: 50px;
-  width: 80%;
+  font-size: 60px;
+  width: 90%;
 }
 
 .sections .content-wrapper p {
   font-size: 20px;
+  font-weight: 200;
   width: 68%;
   line-height: 40px;
 }
@@ -76,11 +77,10 @@ main {
   min-height: 100%;
 }
 
-.section-1 .section-image .image-props img {
+.section-1.active .section-image .image-props img {
   height: 160px;
   width: auto;
   position: absolute;
-
 }
 
 .section-1 .section-image .image-props .prop-1 {
@@ -107,3 +107,69 @@ main {
   top: 40%;
   right: 40%;
 }
+
+footer {
+  height: 20px;
+  max-width: 85vw;
+  min-width: 85vw;
+  width: 85vw;
+  bottom: 40px;
+  position: absolute;
+  height: 7px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 100px;
+  padding-left: 100px;
+}
+
+footer .dot {
+  background-color: #32899A;
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;  
+  position: relative;
+  bottom: 5px;
+  z-index: 2;
+}
+
+footer .dot.active::before{
+  height:   18px;
+  width:  18px;
+  display: inline-block;
+  content: '';
+  border-radius: 9px;
+  position: relative;
+  border-width: 0.5px;
+  border-style: solid;
+  border-color: #32899A;
+  right: 4px;
+  bottom: 4px;
+  z-index: 1;
+}
+
+footer .dot.active::after {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  content: '';
+  border-radius: 15px;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #32899A40;
+  right: 10px;
+  bottom: 33px;
+  z-index: 1;
+}
+
+
+
+.footer-wrapper {
+  height: 30%;
+  background-color: #ffffff60;
+  position: absolute;
+  right:100px;
+  left: 100px;
+  z-index: 1;
+}
+
