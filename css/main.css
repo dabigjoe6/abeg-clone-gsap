@@ -54,7 +54,7 @@ header {
 }
 
 .sections {
-  opacity: 0;
+  opacity: 1;
   display: flex;
   max-width: 100vw;
   padding-top: 100px;
@@ -114,7 +114,7 @@ header {
 }
 
 .sections .section-image .image-props img {
-  height: 160px;
+  height: 0px;
   width: auto;
   position: absolute;
 }

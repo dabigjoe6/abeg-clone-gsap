@@ -6,17 +6,15 @@ const init = () => {
   const setActiveSection = (index) => {
     //remove active class from current dot
     dots[currentActiveSection].classList.remove("active");
-    sections[currentActiveSection].classList.remove('active');
+    sections[currentActiveSection].classList.remove("active");
 
     //update active dot
     currentActiveSection = index;
-    
 
     //add active class to updated current dot
     dots[currentActiveSection].classList.add("active");
     sections[currentActiveSection].classList.add("active");
   };
-
 
   const progressEl = document.querySelector(".footer-progress");
 
@@ -67,14 +65,23 @@ const init = () => {
       end: "bottom bottom",
       markers: true,
     });
-  });
 
-  gsap.from(".section-1 .section-image .image-props img", {
-    height: 0,
-    scale: 0,
-    duration: 1.5,
-    stagger: 0.1,
-    ease: "elastic.inOut(1, 0.4)",
+    if (index === 0) {
+      gsap.to(".section-1 .section-image .image-props img", {
+        height: 160,
+        scale: 1,
+        duration: 1.5,
+        stagger: 0.1,
+        ease: "elastic.inOut(1, 0.4)",
+        scrollTrigger: {
+          trigger: section,
+          toggleActions: "play reverse play play",
+          containerAnimation: scrollAnim,
+          start: "top-=50px top",
+          end: "bottom bottom",
+        },
+      });
+    }
   });
 
   ScrollTrigger.create({
