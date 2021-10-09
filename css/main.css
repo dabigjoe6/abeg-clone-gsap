@@ -49,8 +49,12 @@ header {
   z-index: -100;
 }
 
+.sections.active {
+  opacity: 1;
+}
 
 .sections {
+  opacity: 0;
   display: flex;
   max-width: 100vw;
   padding-top: 100px;
@@ -60,15 +64,27 @@ header {
   width: 100vw;
   max-height: 60vh;
   min-height: 60vh;
+  transition: opacity 1s;
 }
 
 .sections .content-wrapper {
   flex: 1;
 }
 
+.title-wrapper {
+  overflow: hidden;
+}
+
 .sections .content-wrapper h1 {
   font-size: 60px;
+  margin: 0px;
   width: 90%;
+  transform: translate(0%, 100%);
+  transition: transform 1s;
+}
+
+.sections.active .content-wrapper h1 {
+  transform: translate(0%, 0%)
 }
 
 .sections .content-wrapper p {
@@ -76,7 +92,16 @@ header {
   font-weight: 200;
   width: 68%;
   line-height: 40px;
+  transform: translate(0%, 100%);
+  transition: transform 1s;
 }
+
+
+.sections.active .content-wrapper p {
+  transform: translate(0%, 0%);
+  transition: transform 1s;
+}
+
 
 .sections .section-image {
   flex: 1;
@@ -210,6 +235,6 @@ footer .dot.active::after {
   height: 3px;
   background-color: #32899A;
   z-index: 2;
-  width: 17%;
+  width: 0%;
   transition: width 1s;
 }

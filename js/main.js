@@ -1,18 +1,22 @@
 gsap.registerPlugin(ScrollTrigger);
 
 const init = () => {
-  let currentActiveDot = 0;
+  let currentActiveSection = 0;
 
-  const setActiveDot = (index) => {
+  const setActiveSection = (index) => {
     //remove active class from current dot
-    dots[currentActiveDot].classList.remove("active");
+    dots[currentActiveSection].classList.remove("active");
+    sections[currentActiveSection].classList.remove('active');
 
     //update active dot
-    currentActiveDot = index;
+    currentActiveSection = index;
+    
 
     //add active class to updated current dot
-    dots[currentActiveDot].classList.add("active");
+    dots[currentActiveSection].classList.add("active");
+    sections[currentActiveSection].classList.add("active");
   };
+
 
   const progressEl = document.querySelector(".footer-progress");
 
@@ -49,11 +53,13 @@ const init = () => {
     ScrollTrigger.create({
       trigger: section,
       onEnter: () => {
-        setActiveDot(index);
+        setActiveSection(index);
+        setActiveSection(index);
         setProgress(index);
       },
       onEnterBack: () => {
-        setActiveDot(index);
+        setActiveSection(index);
+        setActiveSection(index);
         setProgress(index);
       },
       containerAnimation: scrollAnim,
@@ -84,7 +90,7 @@ const init = () => {
     // snap: 1 / (sections.length - 1),
     // onUpdate: (update) => {
     //   if (update.progress in activeMap) {
-    //     setActiveDot(update.progress);
+    //     setActiveSection(update.progress);
     //     setProgress(update.progress);
     //   }
     // },
