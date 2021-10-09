@@ -1,16 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 
 const init = () => {
-
-  const progressMap = {
-    0: "0%",
-    0.2: "17%",
-    0.4: "34%",
-    0.6: "51%",
-    0.8: "68%",
-    1: "85%",
-  };
-
   let currentActiveDot = 0;
 
   const setActiveDot = (index) => {
@@ -24,18 +14,25 @@ const init = () => {
     dots[currentActiveDot].classList.add("active");
   };
 
+  const progressEl = document.querySelector(".footer-progress");
+
+  const setProgress = (index) => {
+    const percent = (index / (sections.length - 1)) * 100;
+    progressEl.style.width = percent + "%";
+  };
 
   const dots = document.querySelectorAll(".dot");
-  const progressEl = document.querySelector(".footer-progress");
   const sections = document.querySelectorAll(".sections");
 
   const timeline = gsap.timeline();
 
-
   const scrollAnim = timeline
-  .to(".lines", { x: '-40%', ease: "none" }, 0)
-  .to(".container", { x: () => `${-100 * (sections.length - 1)}vw`, ease: "none" }, 0);
-
+    .to(".lines", { x: "-40%", ease: "none" }, 0)
+    .to(
+      ".container",
+      { x: () => `${-100 * (sections.length - 1)}vw`, ease: "none" },
+      0
+    );
 
   //Jump to a section when each dot is clicked
   dots.forEach((dot) => {
@@ -53,15 +50,17 @@ const init = () => {
       trigger: section,
       onEnter: () => {
         setActiveDot(index);
+        setProgress(index);
       },
       onEnterBack: () => {
         setActiveDot(index);
+        setProgress(index);
       },
       containerAnimation: scrollAnim,
-      start: 'top-=50px top',
-      end: 'bottom bottom',
-      markers: true
-    })
+      start: "top-=50px top",
+      end: "bottom bottom",
+      markers: true,
+    });
   });
 
   gsap.from(".section-1 .section-image .image-props img", {
@@ -71,8 +70,6 @@ const init = () => {
     stagger: 0.1,
     ease: "elastic.inOut(1, 0.4)",
   });
-
-
 
   ScrollTrigger.create({
     trigger: ".container",
@@ -92,11 +89,6 @@ const init = () => {
     //   }
     // },
   });
-
-  
-  const setProgress = (progress) => {
-    progressEl.style.width = progressMap[progress];
-  };
 };
 
 initGsap = init();

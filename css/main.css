@@ -209,10 +209,6 @@ footer .dot.active::after {
 .footer-progress {
   height: 3px;
   background-color: #32899A;
-  position: absolute;
-  right:100px;
-  left: 100px;
-  bottom: 57%;
   z-index: 2;
   width: 17%;
   transition: width 1s;
