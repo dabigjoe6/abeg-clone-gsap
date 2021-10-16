@@ -59,8 +59,9 @@ header {
   z-index: -100;
 }
 
-.sections.active {
-}
+/* .sections.active {
+  opacity: 1;
+} */
 
 .sections {
   display: flex;
@@ -72,10 +73,10 @@ header {
   width: 100vw;
   max-height: 60vh;
   min-height: 60vh;
-  transition: opacity 1s;
-  background: red;
+  transition: opacity 3s;
+  /* background: red; */
   position: absolute;
-  opacity: 0;
+  opacity: 1;
 }
 
 .sections .content-wrapper {
@@ -90,14 +91,14 @@ header {
   font-size: 50px;
   margin: 0px;
   width: 90%;
-  /* transform: translate(0%, 100%); */
-  transform: translate(0%, 0%);
+  transform: translate(0%, 100%);
+  /* transform: translate(0%, 0%); */
   transition: transform 1s;
 }
 
-.sections.active .content-wrapper h1 {
+/* .sections.active .content-wrapper h1 {
   transform: translate(0%, 0%);
-}
+} */
 
 .sections .content-wrapper p {
   font-size: 20px;
@@ -110,10 +111,10 @@ header {
 }
 
 
-.sections.active .content-wrapper p {
+/* .sections.active .content-wrapper p {
   transform: translate(0%, 0%);
   opacity: 1;
-}
+} */
 
 
 .sections .section-image {
