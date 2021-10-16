@@ -16,11 +16,13 @@ function throttle(func, timeFrame) {
 }
 
 const init = () => {
-  // const setActiveSection = (index) => {
-  //   //add active class to updated current dot
-  //   dots[index].classList.add("active");
-  //   sections[index].classList.add("active");
-  // };
+  const setActiveSection = (index) => {
+    //add active class to updated current dot
+    dots[prevSection].classList.remove('active')
+    dots[index].classList.add("active");
+    prevSection = currentSection;
+    // sections[index].classList.add("active");
+  };
 
   // const removeActiveSection = (index) => {
   //   //remove active class from current dot
@@ -28,17 +30,18 @@ const init = () => {
   //   sections[index].classList.remove("active");
   // };
 
-  // const progressEl = document.querySelector(".footer-progress");
+  const progressEl = document.querySelector(".footer-progress");
 
-  // const setProgress = (index) => {
-  //   const percent = (index / (sections.length - 1)) * 100;
-  //   progressEl.style.width = percent + "%";
-  // };
+  const setProgress = (index) => {
+    const percent = (index / (sections.length - 1)) * 100;
+    progressEl.style.width = percent + "%";
+  };
 
   const dots = document.querySelectorAll(".dot");
   const sections = document.querySelectorAll(".sections");
 
   let currentSection = 0;
+  let prevSection = 0;
 
   let lastScrollTop = 0;
 
@@ -96,6 +99,8 @@ const init = () => {
         setTimeout(() => {
 
           disableScroll();
+          setActiveSection(currentSection);
+          setProgress(currentSection);
         }, 800);
       },
     });
