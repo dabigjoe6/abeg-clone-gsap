@@ -127,6 +127,7 @@ header {
   transform-origin: center;
   display: block;
   border-color: #17BD7090;
+  visibility: hidden;
 }
 
 

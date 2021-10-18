@@ -42,7 +42,7 @@ const init = () => {
       borderWidth: '0.5px',
       opacity: index === 0 ? 1 : 1 / (index + 0.5),
       borderStyle: 'solid',
-      scale: index + 0.5
+      scale: 1
     })
   })
   const setActiveSection = (index) => {
@@ -101,6 +101,28 @@ const init = () => {
     // sections[prevSection].classList.remove('active');
     // sections[index].classList.add("active");
   };
+
+  const circleTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.section-2',
+      toggleActions: "play reverse reverse play",
+    start: "top-=50px top",
+    end: "bottom bottom",
+    } 
+  });
+
+  circles.forEach((circle, index) => {
+    let circleAnim = gsap.to(circle, {
+      scale: index + 0.5,
+      stagger: true,
+      duration: 2.5,
+      opacity: 1,
+      ease: 'elastic.out(1, 0.3)',
+      visibility: 'visible'
+    });
+
+    circleTimeline.add(circleAnim, '<0.1');
+  })
 
   gsap.to(".section-1 .section-image .image-props img", {
     height: 160,
