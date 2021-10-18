@@ -17,6 +17,8 @@ function throttle(func, timeFrame) {
 const init = () => {
   const sections = document.querySelectorAll(".sections");
 
+  const circles = document.querySelectorAll('.section-2 .image-wrapper span');
+
   let currentSection = 0;
   let prevSection = 0;
 
@@ -31,12 +33,23 @@ const init = () => {
     y: 0,
     opacity: 1,
   });
-  const setActiveSection = (index) => {
-    //TODO: Make timeline of tweens
-    //add active class to updated current dot
-    const timeline = gsap.timeline({
-    });
 
+  circles.forEach((circle, index) => {
+    gsap.set(circle, {
+      height: 105,
+      width: 105,
+      borderRadius: 105 / 2,
+      borderWidth: '0.5px',
+      opacity: index === 0 ? 1 : 1 / (index + 0.5),
+      borderStyle: 'solid',
+      scale: index + 0.5
+    })
+  })
+  const setActiveSection = (index) => {
+    const timeline = gsap.timeline();
+
+
+    //add active class to updated current dot
     dots[prevSection].classList.remove("active");
     dots[index].classList.add("active");
 
@@ -58,7 +71,6 @@ const init = () => {
         },
         0
       )
-      
       .to(sections[prevSection], {
         opacity: 0,
         duration: 0.1
@@ -105,11 +117,7 @@ const init = () => {
     },
   });
 
-  // const removeActiveSection = (index) => {
-  //   //remove active class from current dot
-  //   dots[index].classList.remove("active");
-  //   sections[index].classList.remove("active");
-  // };
+
 
   const progressEl = document.querySelector(".footer-progress");
 
@@ -119,8 +127,6 @@ const init = () => {
   };
 
   const dots = document.querySelectorAll(".dot");
-
-  let lastScrollTop = 0;
 
   window.addEventListener("wheel", (e) => {
     const callback = () => {
@@ -201,13 +207,6 @@ const init = () => {
     markers: true,
     pinSpacing: false,
     anticipatePin: 1,
-    // snap: 1 / (sections.length - 1),
-    // onUpdate: (update) => {
-    //   if (update.progress in activeMap) {
-    //     setActiveSection(update.progress);
-    //     setProgress(update.progress);
-    //   }
-    // },
   });
 };
 
