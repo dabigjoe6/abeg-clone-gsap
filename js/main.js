@@ -75,7 +75,6 @@ const init = () => {
   }
 
   const toggleCircles = (state) => {
-    console.log('state', state);
     circleTimeline.clear();
     if (state !== 'prev') {
       circles.forEach((circle, index) => {
@@ -140,12 +139,12 @@ const init = () => {
         0
       )
       .to(sections[prevSection].querySelector('.image-wrapper .hand-and-phone'), {
-        rotate: -10,
-        duration: 0.1,
+        rotate: 0,
+        duration: 0.5,
         onComplete: () => {
           toggleCircles('prev');
         }
-      }, 0)
+      }, 0.5)
       .to(
         sections[prevSection].querySelector(".image-wrapper"),
         {
@@ -197,10 +196,6 @@ const init = () => {
         },
         ">-0.1"
       )
-      .to(sections[currentSection].querySelector('.image-wrapper .hand-and-phone'), {
-        rotate: 10,
-        duration: 0.1,
-      }, '>')
       .to(
         sections[currentSection].querySelector(".image-wrapper"),
         {
@@ -219,7 +214,10 @@ const init = () => {
           },
         },
         ">"
-      );
+      ).to(sections[currentSection].querySelector('.image-wrapper .hand-and-phone'), {
+        rotate: -15,
+        duration: 0.5,
+      }, '>-1')
 
     // sections[prevSection].classList.remove('active');
     // sections[index].classList.add("active");
