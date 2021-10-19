@@ -264,7 +264,7 @@ footer .dot::before {
   right: 4px;
   bottom: 4px;
   z-index: 1;
-  transition: transform 0.5s, opacity 0.5s;
+  transition: transform 0.2s, opacity 0.2s;
   opacity: 0;
   transform: scale(0);
 }
@@ -313,5 +313,5 @@ footer .dot.active::after {
   background-color: #17BD70;
   z-index: 2;
   width: 0%;
-  transition: width 1s;
+  transition: width 0.5s;
 }

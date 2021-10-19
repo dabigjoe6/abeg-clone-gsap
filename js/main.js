@@ -30,7 +30,7 @@ const init = () => {
   const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
 
   const circleTimeline = gsap.timeline({
-    delay: 5
+    delay: 3
   });
 
 
@@ -77,13 +77,13 @@ const init = () => {
   const toggleImageProps = (state) => {
     const imgPropsAnim = gsap.to(".section-1 .section-image .image-props img", {
       height: 160,
-      scale: state === 'prev' ? 0.1 : 1,
+      scale: state === 'prev' ? 0.05 : 1,
       opacity: state === 'prev' ? 0 : 1,
-      duration: 2,
-      stagger: 0.1,
-      ease: "elastic.inOut(1.75, 0.3)",
+      duration: 1,
+      stagger: 0.05,
+      ease: "elastic.inOut(1.2, 0.75)",
       paused: true,
-      delay: state !== 'prev' && 1.5
+      delay: state !== 'prev' && 1
     })
 
     imgPropsAnim.restart(true);
@@ -102,7 +102,7 @@ const init = () => {
           // paused: true
         });
   
-        circleTimeline.add(circleAnim, "<0.1");
+        circleTimeline.add(circleAnim, "<0.05");
   
     
       });
@@ -117,7 +117,7 @@ const init = () => {
           // paused: true
         });
   
-        circleTimeline.add(circleAnim, "<0.1");
+        circleTimeline.add(circleAnim, "<0.05");
       }
     }
    
@@ -126,6 +126,8 @@ const init = () => {
   }
   const setActiveSection = (index) => {
     const timeline = gsap.timeline();
+
+    timeline.timeScale(2)
 
     //add active class to updated current dot
     dots[prevSection].classList.remove("active");
@@ -140,7 +142,7 @@ const init = () => {
         sections[prevSection].querySelectorAll("h1"),
         {
           y: 100,
-          duration: 0.1,
+          duration: 0.05,
           onComplete: () => {
             toggleContentBackground('prev')
           }
@@ -152,7 +154,7 @@ const init = () => {
         {
           y: 100,
           opacity: 0,
-          duration: 0.1,
+          duration: 0.05,
         },
         0
       )
@@ -170,7 +172,6 @@ const init = () => {
           opacity: 0,
           ease: 'power4.out',
           duration: 1,
-          
         },
         0.5
       )
@@ -178,7 +179,7 @@ const init = () => {
         sections[prevSection],
         {
           opacity: 0,
-          duration: 0.1,
+          duration: 0.05,
         },
         '>'
       )
@@ -186,7 +187,7 @@ const init = () => {
         sections[currentSection],
         {
           opacity: 1,
-          duration: 0.1,
+          duration: 0.05,
         },
         ">+0.5"
       )
@@ -194,7 +195,7 @@ const init = () => {
         sections[currentSection].querySelectorAll("h1"),
         {
           y: 0,
-          duration: 0.1,
+          duration: 0.05,
           onStart: () => {
             if (currentSection === 4) {
               toggleContentBackground('curr');
@@ -207,7 +208,7 @@ const init = () => {
         sections[currentSection].querySelector("p"),
         {
           y: 0,
-          duration: 0.1,
+          duration: 0.05,
         },
         ">"
       )
@@ -215,9 +216,9 @@ const init = () => {
         sections[currentSection].querySelector("p"),
         {
           opacity: 1,
-          duration: 0.1,
+          duration: 0.05,
         },
-        ">-0.1"
+        ">-0.05"
       )
       .to(
         sections[currentSection].querySelector(".image-wrapper"),
