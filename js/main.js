@@ -2,6 +2,8 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
+//TODO: Tie image wrapper to timeline animations and not scroll trigger
+
 let lastTime = 0;
 
 function throttle(func, timeFrame) {
@@ -17,10 +19,21 @@ function throttle(func, timeFrame) {
 const init = () => {
   const sections = document.querySelectorAll(".sections");
 
-  const circles = document.querySelectorAll('.section-2 .image-wrapper span');
+  const circles = document.querySelectorAll(".section-2 .image-wrapper span");
 
   let currentSection = 0;
   let prevSection = 0;
+
+  const timeline = gsap.timeline();
+
+
+  const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
+
+  const circleTimeline = gsap.timeline({
+    delay: 2
+  });
+
+
 
   gsap.set(sections[currentSection], {
     opacity: 1,
@@ -39,26 +52,60 @@ const init = () => {
       height: 105,
       width: 105,
       borderRadius: 105 / 2,
-      borderWidth: '0.5px',
+      borderWidth: "0.5px",
       opacity: index === 0 ? 1 : 1 / (index + 0.5),
-      borderStyle: 'solid',
-      scale: 1
+      borderStyle: "solid",
+      scale: 1,
+    });
+  });
+
+  const toggleImageProps = (state) => {
+    gsap.to(".section-1 .section-image .image-props img", {
+      height: 160,
+      scale: state === 'prev' ? 0 : 1,
+      duration: 2,
+      stagger: 0.1,
+      ease: "elastic.inOut(1.75, 0.3)",
     })
-  })
+  }
+
+  const toggleCircles = (state) => {
+    circles.forEach((circle, index) => {
+      let circleAnim = gsap.to(circle, {
+        scale: state === 'prev' ? 0 : 0.5 + index,
+        stagger: true,
+        duration: 2.5,
+        opacity: 1,
+        ease: "elastic.out(1, 0.3)",
+        visibility: "visible",
+      });
+  
+      circleTimeline.add(circleAnim, "<0.1");
+    });
+
+    circleTimeline.play();
+  }
   const setActiveSection = (index) => {
     const timeline = gsap.timeline();
-
 
     //add active class to updated current dot
     dots[prevSection].classList.remove("active");
     dots[index].classList.add("active");
+
+    if (prevSection === 0 || currentSection === 0) {
+      toggleImageProps(prevSection === 0 ? 'prev' : 'current');
+    }
+
+    if (prevSection === 1 || currentSection === 1) {
+      toggleCircles(prevSection === 1 ? 'prev' : 'current');
+    }
 
     timeline
       .to(
         sections[prevSection].querySelectorAll("h1"),
         {
           y: 100,
-          duration: 0.1
+          duration: 0.1,
         },
         0
       )
@@ -67,79 +114,79 @@ const init = () => {
         {
           y: 100,
           opacity: 0,
-          duration: 0.1
+          duration: 0.1,
         },
         0
       )
-      .to(sections[prevSection], {
-        opacity: 0,
-        duration: 0.1
-      }, 0)
-      .to(sections[currentSection], {
-        opacity: 1,
-        duration: 0.1
-      }, '>+0.5')
+      .to(
+        sections[prevSection].querySelector(".image-wrapper"),
+        {
+          y: 100,
+          opacity: 0,
+          duration: 0.1,
+          visibility: 'hidden',
+        },
+        0
+      )
+      .to(
+        sections[prevSection],
+        {
+          opacity: 0,
+          duration: 0.1,
+        },
+        0
+      )
+      .to(
+        sections[currentSection],
+        {
+          opacity: 1,
+          duration: 0.1,
+        },
+        ">+0.5"
+      )
       .to(
         sections[currentSection].querySelectorAll("h1"),
 
         {
           y: 0,
-          duration: 0.1
-        }, '>'
+          duration: 0.1,
+        },
+        ">"
       )
-      .to(sections[currentSection].querySelector("p"), {
-        y: 0,
-        duration: 0.1,
-      }, '>').to(sections[currentSection].querySelector("p"), {
-        opacity: 1,
-        duration: 0.1,
-        onComplete: () => {
-          prevSection = currentSection;
-        }
-      }, '>-0.1');
+      .to(
+        sections[currentSection].querySelector("p"),
+        {
+          y: 0,
+          duration: 0.1,
+        },
+        ">"
+      )
+      .to(
+        sections[currentSection].querySelector("p"),
+        {
+          opacity: 1,
+          duration: 0.1,
+        },
+        ">-0.1"
+      )
+      .to(
+        sections[currentSection].querySelector(".image-wrapper"),
+        {
+          opacity: 1,
+          y: 0,
+          ease: 'power4.out',
+          visibility: 'visible',
+          duration: 0.7,
+          onComplete: () => {
+            prevSection = currentSection;
+          },
+        },
+        ">"
+      );
 
     // sections[prevSection].classList.remove('active');
     // sections[index].classList.add("active");
   };
-
-  const circleTimeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.section-2',
-      toggleActions: "play reverse reverse play",
-    start: "top-=50px top",
-    end: "bottom bottom",
-    } 
-  });
-
-  circles.forEach((circle, index) => {
-    let circleAnim = gsap.to(circle, {
-      scale: index + 0.5,
-      stagger: true,
-      duration: 2.5,
-      opacity: 1,
-      ease: 'elastic.out(1, 0.3)',
-      visibility: 'visible'
-    });
-
-    circleTimeline.add(circleAnim, '<0.1');
-  })
-
-  gsap.to(".section-1 .section-image .image-props img", {
-    height: 160,
-    scale: 1,
-    duration: 1.5,
-    stagger: 0.1,
-    ease: "elastic.inOut(1, 0.4)",
-    scrollTrigger: {
-      trigger: ".section-1",
-      toggleActions: "play reverse play play",
-      // containerAnimation: scrollAnim,
-      start: "top-=50px top",
-      end: "bottom bottom",
-    },
-  });
-
-
 
   const progressEl = document.querySelector(".footer-progress");
 
@@ -188,7 +235,6 @@ const init = () => {
     window.onscroll = () => {};
   };
 
-  const timeline = gsap.timeline();
 
   const jumpToSection = (index) => {
     gsap.to(window, {
@@ -208,7 +254,6 @@ const init = () => {
     });
   };
 
-  const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
 
   //Jump to a section when each dot is clicked
   dots.forEach((dot, index) => {

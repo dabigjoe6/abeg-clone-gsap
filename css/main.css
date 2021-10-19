@@ -117,6 +117,7 @@ header {
   bottom: 80px;
   display: flex;
   align-items: center;
+  visibility: hidden;
   justify-content: center;
 }
 
@@ -130,6 +131,11 @@ header {
   visibility: hidden;
 }
 
+.section-2 .image-wrapper img {
+  height: 25px;
+  width: auto;
+}
+
 
 .sections .section-image {
   flex: 1;
@@ -141,11 +147,14 @@ header {
   min-height: 100%;
 }
 
-.sections .section-image .image-props img {
-  height: 0px;
+.section-1 .section-image .image-props img {
+  height: 160px;
+  scale: 1;
+  transform-origin: center;
   width: auto;
   position: absolute;
 }
+
 
 .section-1 .section-image .image-props .prop-1 {
   top: -20px;
