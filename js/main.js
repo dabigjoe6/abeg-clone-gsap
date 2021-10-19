@@ -2,7 +2,6 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-//TODO: Tie image wrapper to timeline animations and not scroll trigger
 
 let lastTime = 0;
 
