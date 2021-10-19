@@ -117,8 +117,9 @@ header {
   bottom: 80px;
   display: flex;
   align-items: center;
-  visibility: hidden;
   justify-content: center;
+  opacity: 0;
+  transform: translateY(100px)
 }
 
 .section-2 .image-wrapper span {
@@ -128,7 +129,6 @@ header {
   transform-origin: center;
   display: block;
   border-color: #17BD7090;
-  visibility: hidden;
 }
 
 .section-2 .image-wrapper img {
@@ -179,6 +179,11 @@ header {
 .section-1 .section-image .image-props .prop-4 {
   top: 40%;
   right: 40%;
+}
+
+.section-3 .image-wrapper .hand-and-phone {
+  height: 600px;
+  width: auto;
 }
 
 footer {

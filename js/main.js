@@ -30,7 +30,7 @@ const init = () => {
   const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
 
   const circleTimeline = gsap.timeline({
-    delay: 2
+    delay: 5
   });
 
 
@@ -60,28 +60,53 @@ const init = () => {
   });
 
   const toggleImageProps = (state) => {
-    gsap.to(".section-1 .section-image .image-props img", {
+    const imgPropsAnim = gsap.to(".section-1 .section-image .image-props img", {
       height: 160,
-      scale: state === 'prev' ? 0 : 1,
+      scale: state === 'prev' ? 0.1 : 1,
+      opacity: state === 'prev' ? 0 : 1,
       duration: 2,
       stagger: 0.1,
       ease: "elastic.inOut(1.75, 0.3)",
+      paused: true,
+      delay: state !== 'prev' && 1.5
     })
+
+    imgPropsAnim.restart(true);
   }
 
   const toggleCircles = (state) => {
-    circles.forEach((circle, index) => {
-      let circleAnim = gsap.to(circle, {
-        scale: state === 'prev' ? 0 : 0.5 + index,
-        stagger: true,
-        duration: 2.5,
-        opacity: 1,
-        ease: "elastic.out(1, 0.3)",
-        visibility: "visible",
-      });
+    console.log('state', state);
+    circleTimeline.clear();
+    if (state !== 'prev') {
+      circles.forEach((circle, index) => {
+        let circleAnim = gsap.to(circle, {
+          scale: 0.5 + index,
+          stagger: true,
+          duration: 2,
+          opacity: 1,
+          ease: "elastic.out(1.2, 0.75)",
+          // paused: true
+        });
   
-      circleTimeline.add(circleAnim, "<0.1");
-    });
+        circleTimeline.add(circleAnim, "<0.1");
+  
+    
+      });
+    } else {
+      for (let index = circles.length - 1; index > 0; --index) {
+        let circleAnim = gsap.to(circles[index], {
+          scale:0,
+          stagger: true,
+          duration: 2,
+          opacity: 1,
+          ease: "elastic.out(1.2, 0.75)",
+          // paused: true
+        });
+  
+        circleTimeline.add(circleAnim, "<0.1");
+      }
+    }
+   
 
     circleTimeline.play();
   }
@@ -94,10 +119,6 @@ const init = () => {
 
     if (prevSection === 0 || currentSection === 0) {
       toggleImageProps(prevSection === 0 ? 'prev' : 'current');
-    }
-
-    if (prevSection === 1 || currentSection === 1) {
-      toggleCircles(prevSection === 1 ? 'prev' : 'current');
     }
 
     timeline
@@ -118,15 +139,23 @@ const init = () => {
         },
         0
       )
+      .to(sections[prevSection].querySelector('.image-wrapper .hand-and-phone'), {
+        rotate: -10,
+        duration: 0.1,
+        onComplete: () => {
+          toggleCircles('prev');
+        }
+      }, 0)
       .to(
         sections[prevSection].querySelector(".image-wrapper"),
         {
           y: 100,
           opacity: 0,
-          duration: 0.1,
-          visibility: 'hidden',
+          ease: 'power4.out',
+          duration: 1,
+          
         },
-        0
+        0.5
       )
       .to(
         sections[prevSection],
@@ -134,7 +163,7 @@ const init = () => {
           opacity: 0,
           duration: 0.1,
         },
-        0
+        '>'
       )
       .to(
         sections[currentSection],
@@ -146,7 +175,6 @@ const init = () => {
       )
       .to(
         sections[currentSection].querySelectorAll("h1"),
-
         {
           y: 0,
           duration: 0.1,
@@ -169,14 +197,23 @@ const init = () => {
         },
         ">-0.1"
       )
+      .to(sections[currentSection].querySelector('.image-wrapper .hand-and-phone'), {
+        rotate: 10,
+        duration: 0.1,
+      }, '>')
       .to(
         sections[currentSection].querySelector(".image-wrapper"),
         {
           opacity: 1,
           y: 0,
           ease: 'power4.out',
-          visibility: 'visible',
-          duration: 0.7,
+          // opacity: 1,
+          duration: 1,
+          onStart: () => {
+            // if (prevSection === 1 || currentSection === 1) {
+              toggleCircles('current');
+            // }
+          },
           onComplete: () => {
             prevSection = currentSection;
           },
