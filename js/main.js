@@ -59,6 +59,21 @@ const init = () => {
     });
   });
 
+  const toggleContentBackground = (state) => {
+    if (state !== 'prev') {
+      gsap.to('.section-5 .content-background', {
+        width: '80%',
+        duration: 0.5
+      });
+    } else {
+      gsap.to('.section-5 .content-background', {
+        width: '0%',
+        duration: 0.5
+      })
+    }
+  
+  }
+
   const toggleImageProps = (state) => {
     const imgPropsAnim = gsap.to(".section-1 .section-image .image-props img", {
       height: 160,
@@ -126,6 +141,9 @@ const init = () => {
         {
           y: 100,
           duration: 0.1,
+          onComplete: () => {
+            toggleContentBackground('prev')
+          }
         },
         0
       )
@@ -177,6 +195,11 @@ const init = () => {
         {
           y: 0,
           duration: 0.1,
+          onStart: () => {
+            if (currentSection === 4) {
+              toggleContentBackground('curr');
+            }
+          }
         },
         ">"
       )

@@ -134,6 +134,9 @@ header {
 .section-2 .image-wrapper img {
   height: 25px;
   width: auto;
+  position: absolute;
+  left: 48.5%;
+  bottom: 47%;
 }
 
 
@@ -184,6 +187,40 @@ header {
 .section-img .image-wrapper .hand-and-phone {
   height: 600px;
   width: auto;
+}
+
+.section-5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+.section-5 .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.section-5 .content-background {
+  /* width: 80%; */
+  width: 0%;
+  transform-origin: center;
+  height: 200%;
+  background-color: #19444D;
+  position: absolute;
+  border-radius: 4px;
+}
+
+.section-5 .title-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 footer {
