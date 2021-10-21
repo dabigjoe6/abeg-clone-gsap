@@ -1,39 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
-gsap.registerPlugin(CSSRulePlugin);
-
-
-
-//TODO: MOVE THROTTLE TO ITS FILE
-let lastTime = 0;
-
-function throttle(func, timeFrame) {
-  return function () {
-    var now = Date.now();
-    if (now - lastTime >= timeFrame) {
-      func();
-      lastTime = now;
-    }
-  };
-}
-
-//TODO: MOVE disable scroll TO ITS FILE
-const disableScroll = () => {
-  // Get the current page scroll position
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft =
-    window.pageXOffset || document.documentElement.scrollLeft;
-
-  // if any scroll is attempted, set this to the previous value
-  window.onscroll = function () {
-    window.scrollTo(scrollLeft, scrollTop);
-  };
-};
-
-const enableScroll = () => {
-  window.onscroll = () => {};
-};
-
 
 const init = () => {
 
