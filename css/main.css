@@ -2,12 +2,25 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+body {
+  font-family: "Cerebri Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    background: #0f292e;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    color: white;
+}
 
-.its-just-a-clone {
+
+.mobile-view {
   display: flex;
   width: 110vw;
   height: 110vh;
-  align-items: center;
+  padding-top: 100px;
+  align-items: flex-start;
   justify-content: center;
   z-index: 100;
   position: absolute;
@@ -31,18 +44,8 @@ img {
     display: block;
   }
   
-  .its-just-a-clone { 
+  .mobile-view { 
     display: none;
-  }
-  body {
-    background: #0f292e;
-    /* overflow-x: hidden; */
-    color: white;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    font-family: "Cerebri Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
   
   .container {
@@ -93,10 +96,6 @@ img {
     z-index: -100;
   }
   
-  /* .sections.active {
-    opacity: 1;
-  } */
-  
   .sections {
     display: flex;
     max-width: 100vw;
@@ -108,12 +107,11 @@ img {
     max-height: 60vh;
     min-height: 60vh;
     transition: opacity 3s;
-    /* background: red; */
     position: absolute;
     opacity: 1;
   }
   
-  .sections .content-wrapper {
+  .content-wrapper {
     flex: 1;
   }
   
@@ -121,7 +119,7 @@ img {
     overflow: hidden;
   }
   
-  .sections .content-wrapper h1 {
+  .content-wrapper h1 {
     font-size: 50px;
     margin: 0px;
     width: 90%;
@@ -130,7 +128,7 @@ img {
   }
   
   
-  .sections .content-wrapper p {
+  .content-wrapper p {
     font-size: 20px;
     font-weight: 200;
     width: 68%;
@@ -140,7 +138,7 @@ img {
     transition: transform 1s, opacity 1s;
   }
   
-  .sections .image-wrapper {
+  .image-wrapper {
     background: linear-gradient(45deg, #19444D, #23606C);
     border-radius: 100vh 300px 400px 200px;
     height: 60vh;
@@ -172,17 +170,17 @@ img {
   }
   
   
-  .sections .section-image {
+  .section-image {
     flex: 1;
     min-height: 100%;
   }
   
-  .section-1 .section-image .image-props {
+  .section-1 .image-props {
     position: relative;
     min-height: 100%;
   }
   
-  .section-1 .section-image .image-props img {
+  .section-1 .image-props img {
     height: 160px;
     scale: 1;
     transform-origin: center;
@@ -191,32 +189,32 @@ img {
   }
   
   
-  .section-1 .section-image .image-props .prop-1 {
+  .section-1 .prop-1 {
     top: -20px;
     left: 0px;
   }
   
-  .section-1 .section-image .image-props .prop-2 {
+  .section-1 .prop-2 {
     top: -20px;
     right: 0px;
   }
   
-  .section-1 .section-image .image-props .prop-3 {
+  .section-1 .prop-3 {
     bottom: -20px;
     right: 0px;
   }
   
-  .section-1 .section-image .image-props .prop-5 {
+  .section-1 .prop-5 {
     bottom: -20px;
     left: 0px;
   }
   
-  .section-1 .section-image .image-props .prop-4 {
+  .section-1 .prop-4 {
     top: 40%;
     right: 40%;
   }
   
-  .section-img .image-wrapper .hand-and-phone {
+  .section-img .hand-and-phone {
     height: 600px;
     width: auto;
   }
@@ -226,7 +224,6 @@ img {
     align-items: center;
     justify-content: center;
     text-align: center;
-    
   }
   
   .section-5 .content-wrapper {
@@ -272,7 +269,7 @@ img {
     z-index: 3;
   }
   
-  footer .dot {
+  .dot {
     background-color: #17BD70;
     height: 12px;
     width: 12px;
@@ -283,7 +280,7 @@ img {
     font-size: 0px;
   }
   
-  footer .dot::before {
+  .dot::before {
     height: 18px;
     width: 18px;
     display: inline-block;
@@ -301,12 +298,12 @@ img {
     transform: scale(0);
   }
   
-  footer .dot.active::before {
+  .dot.active::before {
     opacity: 1;
     transform: scale(1);
   }
   
-  footer .dot::after {
+  .dot::after {
     height: 30px;
     width: 30px;
     display: inline-block;
@@ -325,7 +322,7 @@ img {
     transform: scale(0);
   }
   
-  footer .dot.active::after {
+  .dot.active::after {
     opacity: 1;
     transform: scale(1);
   }
