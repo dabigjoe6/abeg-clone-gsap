@@ -2,8 +2,8 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 
 const init = () => {
-
   const ELEMENT_DURATION = 0.05;
+  window.scrollTo({top: 0})
 
   // Elements
   const sections = document.querySelectorAll(".sections");
@@ -11,17 +11,14 @@ const init = () => {
   const progressEl = document.querySelector(".footer-progress");
   const dots = document.querySelectorAll(".dot");
 
-
   // Timelines
-  const timeline = gsap.timeline();
   const circleTimeline = gsap.timeline({
-    delay: 3
+    delay: 3,
   });
 
   // Swaps the current and next/prev section on the viewport
   let currentSection = 0;
   let prevSection = 0;
-
 
   // Set properties of section in viewport using GSAP on first page load
   gsap.set(sections[currentSection], {
@@ -31,7 +28,7 @@ const init = () => {
   gsap.set(sections[currentSection].querySelectorAll("h1"), {
     y: 0,
   });
-  
+
   gsap.set(sections[currentSection].querySelector("p"), {
     y: 0,
     opacity: 1,
@@ -49,42 +46,39 @@ const init = () => {
     });
   });
 
-
-
   // Animations
-
   const toggleContentBackground = (state) => {
-    if (state !== 'prev') {
-      gsap.to('.section-5 .content-background', {
-        width: '80%',
-        duration: 0.5
+    if (state !== "prev") {
+      gsap.to(".section-5 .content-background", {
+        width: "80%",
+        duration: 0.5,
       });
     } else {
-      gsap.to('.section-5 .content-background', {
-        width: '0%',
-        duration: 0.5
-      })
+      gsap.to(".section-5 .content-background", {
+        width: "0%",
+        duration: 0.5,
+      });
     }
-  }
+  };
 
   const toggleImageProps = (state) => {
     const imgPropsAnim = gsap.to(".section-1 .section-image .image-props img", {
       height: 160,
-      scale: state === 'prev' ? ELEMENT_DURATION : 1,
-      opacity: state === 'prev' ? 0 : 1,
+      scale: state === "prev" ? ELEMENT_DURATION : 1,
+      opacity: state === "prev" ? 0 : 1,
       duration: 1,
       stagger: ELEMENT_DURATION,
       ease: "elastic.inOut(1.2, 0.75)",
       paused: true,
-      delay: state !== 'prev' && 1
-    })
+      delay: state !== "prev" && 1,
+    });
 
     imgPropsAnim.restart(true);
-  }
+  };
 
   const toggleCircles = (state) => {
     circleTimeline.clear();
-    if (state !== 'prev') {
+    if (state !== "prev") {
       circles.forEach((circle, index) => {
         let circleAnim = gsap.to(circle, {
           scale: 0.5 + index,
@@ -94,34 +88,31 @@ const init = () => {
           ease: "elastic.out(1.2, 0.75)",
           // paused: true
         });
-  
+
         circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
-  
-    
       });
     } else {
       for (let index = circles.length - 1; index > 0; --index) {
         let circleAnim = gsap.to(circles[index], {
-          scale:0,
+          scale: 0,
           stagger: true,
           duration: 2,
           opacity: 1,
           ease: "elastic.out(1.2, 0.75)",
           // paused: true
         });
-  
+
         circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
       }
     }
-   
 
     circleTimeline.play();
-  }
+  };
 
   const animateSections = () => {
     const timeline = gsap.timeline();
 
-    timeline.timeScale(2)
+    timeline.timeScale(2);
 
     const prevTimeline = gsap.timeline();
     const currentTimeline = gsap.timeline();
@@ -130,7 +121,7 @@ const init = () => {
     dots[currentSection].classList.add("active");
 
     if (prevSection === 0 || currentSection === 0) {
-      toggleImageProps(prevSection === 0 ? 'prev' : 'current');
+      toggleImageProps(prevSection === 0 ? "prev" : "current");
     }
 
     prevTimeline
@@ -141,9 +132,9 @@ const init = () => {
           duration: ELEMENT_DURATION,
           onComplete: () => {
             if (prevSection === 4) {
-              toggleContentBackground('prev')
+              toggleContentBackground("prev");
             }
-          }
+          },
         },
         0
       )
@@ -156,21 +147,25 @@ const init = () => {
         },
         0
       )
-      .to(sections[prevSection].querySelector('.image-wrapper .hand-and-phone'), {
-        rotate: 0,
-        duration: 0.5,
-        onComplete: () => {
-          if (prevSection === 1) {
-            toggleCircles('prev');
-          }
-        }
-      }, 0.5)
+      .to(
+        sections[prevSection].querySelector(".image-wrapper .hand-and-phone"),
+        {
+          rotate: 0,
+          duration: 0.5,
+          onComplete: () => {
+            if (prevSection === 1) {
+              toggleCircles("prev");
+            }
+          },
+        },
+        0.5
+      )
       .to(
         sections[prevSection].querySelector(".image-wrapper"),
         {
           y: 100,
           opacity: 0,
-          ease: 'power4.out',
+          ease: "power4.out",
           duration: 1,
         },
         0.5
@@ -181,10 +176,11 @@ const init = () => {
           opacity: 0,
           duration: ELEMENT_DURATION,
         },
-        '>'
+        ">"
       );
-      
-      currentTimeline.to(
+
+    currentTimeline
+      .to(
         sections[currentSection],
         {
           opacity: 1,
@@ -199,9 +195,9 @@ const init = () => {
           duration: ELEMENT_DURATION,
           onStart: () => {
             if (currentSection === 4) {
-              toggleContentBackground('curr');
+              toggleContentBackground("curr");
             }
-          }
+          },
         },
         ">"
       )
@@ -226,12 +222,12 @@ const init = () => {
         {
           opacity: 1,
           y: 0,
-          ease: 'power4.out',
+          ease: "power4.out",
           // opacity: 1,
           duration: 1,
           onStart: () => {
             if (currentSection === 1) {
-              toggleCircles('current');
+              toggleCircles("current");
             }
           },
           onComplete: () => {
@@ -239,12 +235,19 @@ const init = () => {
           },
         },
         ">"
-      ).to(sections[currentSection].querySelector('.image-wrapper .hand-and-phone'), {
-        rotate: -15,
-        duration: 0.5,
-      }, '>-1')
+      )
+      .to(
+        sections[currentSection].querySelector(
+          ".image-wrapper .hand-and-phone"
+        ),
+        {
+          rotate: -15,
+          duration: 0.5,
+        },
+        ">-1"
+      );
 
-      timeline.add(prevTimeline).add(currentTimeline);
+    timeline.add(prevTimeline).add(currentTimeline);
   };
 
   const setProgress = () => {
@@ -276,6 +279,7 @@ const init = () => {
   disableScroll();
 
   const jumpToSection = () => {
+    setProgress(currentSection);
     gsap.to(window, {
       duration: 2.5,
       scrollTo: {
@@ -287,12 +291,10 @@ const init = () => {
         setTimeout(() => {
           disableScroll();
           animateSections();
-          setProgress(currentSection);
-        }, 800);
+        }, 850);
       },
     });
   };
-
 
   //Jump to a section when each dot is clicked
   dots.forEach((dot, index) => {
@@ -303,17 +305,14 @@ const init = () => {
     });
   });
 
-  const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
-
+  gsap.set('.lines', {x: '-5%'})
+  const scrollAnim = gsap.to(".lines",{ x: "-50%", ease: "none"});
 
   ScrollTrigger.create({
     trigger: ".container",
     animation: scrollAnim,
     pin: true,
-    start: "top top",
-    end: `bottom+=700% bottom`,
     scrub: 1,
-    markers: true,
     pinSpacing: false,
     anticipatePin: 1,
   });
