@@ -86,7 +86,6 @@ const init = () => {
           duration: 2,
           opacity: 1,
           ease: "elastic.out(1.2, 0.75)",
-          // paused: true
         });
 
         circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
@@ -99,7 +98,6 @@ const init = () => {
           duration: 2,
           opacity: 1,
           ease: "elastic.out(1.2, 0.75)",
-          // paused: true
         });
 
         circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
