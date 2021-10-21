@@ -3,6 +3,8 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
 
+
+//TODO: MOVE THROTTLE TO ITS FILE
 let lastTime = 0;
 
 function throttle(func, timeFrame) {
@@ -15,25 +17,47 @@ function throttle(func, timeFrame) {
   };
 }
 
+//TODO: MOVE disable scroll TO ITS FILE
+const disableScroll = () => {
+  // Get the current page scroll position
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft =
+    window.pageXOffset || document.documentElement.scrollLeft;
+
+  // if any scroll is attempted, set this to the previous value
+  window.onscroll = function () {
+    window.scrollTo(scrollLeft, scrollTop);
+  };
+};
+
+const enableScroll = () => {
+  window.onscroll = () => {};
+};
+
+
 const init = () => {
+
+  const ELEMENT_DURATION = 0.05;
+
+  // Elements
   const sections = document.querySelectorAll(".sections");
-
   const circles = document.querySelectorAll(".section-2 .image-wrapper span");
+  const progressEl = document.querySelector(".footer-progress");
+  const dots = document.querySelectorAll(".dot");
 
-  let currentSection = 0;
-  let prevSection = 0;
 
+  // Timelines
   const timeline = gsap.timeline();
-
-
-  const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
-
   const circleTimeline = gsap.timeline({
     delay: 3
   });
 
+  // Swaps the current and next/prev section on the viewport
+  let currentSection = 0;
+  let prevSection = 0;
 
 
+  // Set properties of section in viewport using GSAP on first page load
   gsap.set(sections[currentSection], {
     opacity: 1,
   });
@@ -41,6 +65,7 @@ const init = () => {
   gsap.set(sections[currentSection].querySelectorAll("h1"), {
     y: 0,
   });
+  
   gsap.set(sections[currentSection].querySelector("p"), {
     y: 0,
     opacity: 1,
@@ -58,6 +83,10 @@ const init = () => {
     });
   });
 
+
+
+  // Animations
+
   const toggleContentBackground = (state) => {
     if (state !== 'prev') {
       gsap.to('.section-5 .content-background', {
@@ -70,16 +99,15 @@ const init = () => {
         duration: 0.5
       })
     }
-  
   }
 
   const toggleImageProps = (state) => {
     const imgPropsAnim = gsap.to(".section-1 .section-image .image-props img", {
       height: 160,
-      scale: state === 'prev' ? 0.05 : 1,
+      scale: state === 'prev' ? ELEMENT_DURATION : 1,
       opacity: state === 'prev' ? 0 : 1,
       duration: 1,
-      stagger: 0.05,
+      stagger: ELEMENT_DURATION,
       ease: "elastic.inOut(1.2, 0.75)",
       paused: true,
       delay: state !== 'prev' && 1
@@ -101,7 +129,7 @@ const init = () => {
           // paused: true
         });
   
-        circleTimeline.add(circleAnim, "<0.05");
+        circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
   
     
       });
@@ -116,34 +144,39 @@ const init = () => {
           // paused: true
         });
   
-        circleTimeline.add(circleAnim, "<0.05");
+        circleTimeline.add(circleAnim, `<${ELEMENT_DURATION}`);
       }
     }
    
 
     circleTimeline.play();
   }
-  const setActiveSection = (index) => {
+
+  const animateSections = () => {
     const timeline = gsap.timeline();
 
     timeline.timeScale(2)
 
-    //add active class to updated current dot
+    const prevTimeline = gsap.timeline();
+    const currentTimeline = gsap.timeline();
+
     dots[prevSection].classList.remove("active");
-    dots[index].classList.add("active");
+    dots[currentSection].classList.add("active");
 
     if (prevSection === 0 || currentSection === 0) {
       toggleImageProps(prevSection === 0 ? 'prev' : 'current');
     }
 
-    timeline
+    prevTimeline
       .to(
         sections[prevSection].querySelectorAll("h1"),
         {
           y: 100,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
           onComplete: () => {
-            toggleContentBackground('prev')
+            if (prevSection === 4) {
+              toggleContentBackground('prev')
+            }
           }
         },
         0
@@ -153,7 +186,7 @@ const init = () => {
         {
           y: 100,
           opacity: 0,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
         },
         0
       )
@@ -161,7 +194,9 @@ const init = () => {
         rotate: 0,
         duration: 0.5,
         onComplete: () => {
-          toggleCircles('prev');
+          if (prevSection === 1) {
+            toggleCircles('prev');
+          }
         }
       }, 0.5)
       .to(
@@ -178,15 +213,16 @@ const init = () => {
         sections[prevSection],
         {
           opacity: 0,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
         },
         '>'
-      )
-      .to(
+      );
+      
+      currentTimeline.to(
         sections[currentSection],
         {
           opacity: 1,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
         },
         ">+0.5"
       )
@@ -194,7 +230,7 @@ const init = () => {
         sections[currentSection].querySelectorAll("h1"),
         {
           y: 0,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
           onStart: () => {
             if (currentSection === 4) {
               toggleContentBackground('curr');
@@ -207,7 +243,7 @@ const init = () => {
         sections[currentSection].querySelector("p"),
         {
           y: 0,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
         },
         ">"
       )
@@ -215,9 +251,9 @@ const init = () => {
         sections[currentSection].querySelector("p"),
         {
           opacity: 1,
-          duration: 0.05,
+          duration: ELEMENT_DURATION,
         },
-        ">-0.05"
+        `>-${ELEMENT_DURATION}`
       )
       .to(
         sections[currentSection].querySelector(".image-wrapper"),
@@ -228,9 +264,9 @@ const init = () => {
           // opacity: 1,
           duration: 1,
           onStart: () => {
-            // if (prevSection === 1 || currentSection === 1) {
+            if (currentSection === 1) {
               toggleCircles('current');
-            // }
+            }
           },
           onComplete: () => {
             prevSection = currentSection;
@@ -242,70 +278,49 @@ const init = () => {
         duration: 0.5,
       }, '>-1')
 
-    // sections[prevSection].classList.remove('active');
-    // sections[index].classList.add("active");
+      timeline.add(prevTimeline).add(currentTimeline);
   };
 
-  const progressEl = document.querySelector(".footer-progress");
-
-  const setProgress = (index) => {
-    const percent = (index / (sections.length - 1)) * 100;
+  const setProgress = () => {
+    const percent = (currentSection / (sections.length - 1)) * 100;
     progressEl.style.width = percent + "%";
   };
 
-  const dots = document.querySelectorAll(".dot");
-
+  //Jump to next/prev section when user scrolls
   window.addEventListener("wheel", (e) => {
     const callback = () => {
       let delta = e.deltaY;
 
       if (delta > 0) {
-        if (currentSection < 6) {
+        if (currentSection < sections.length) {
           currentSection += 1;
-          jumpToSection(currentSection);
+          jumpToSection();
         }
       } else {
         if (currentSection > 0) {
           currentSection -= 1;
-          jumpToSection(currentSection);
+          jumpToSection();
         }
       }
     };
-    let t = throttle(callback, 1500);
+    let t = throttle(callback, 2000);
     t();
   });
 
-  const disableScroll = () => {
-    // Get the current page scroll position
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft =
-      window.pageXOffset || document.documentElement.scrollLeft;
-
-    // if any scroll is attempted, set this to the previous value
-    window.onscroll = function () {
-      window.scrollTo(scrollLeft, scrollTop);
-    };
-  };
-
   disableScroll();
 
-  const enableScroll = () => {
-    window.onscroll = () => {};
-  };
-
-
-  const jumpToSection = (index) => {
+  const jumpToSection = () => {
     gsap.to(window, {
       duration: 2.5,
       scrollTo: {
-        y: 100 * index,
+        y: 100 * currentSection,
       },
       ease: "elastic.out(1.75, 0.3)",
       onStart: () => {
-        enableScroll();
+        enableScroll(); // Enable scroll on animation start
         setTimeout(() => {
           disableScroll();
-          setActiveSection(currentSection);
+          animateSections();
           setProgress(currentSection);
         }, 800);
       },
@@ -318,9 +333,12 @@ const init = () => {
     dot.addEventListener("click", (e) => {
       e.preventDefault();
       currentSection = index;
-      jumpToSection(index);
+      jumpToSection();
     });
   });
+
+  const scrollAnim = timeline.to(".lines", { x: "-40%", ease: "none" }, 0);
+
 
   ScrollTrigger.create({
     trigger: ".container",
