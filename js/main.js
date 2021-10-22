@@ -19,6 +19,7 @@ const init = () => {
   // Swaps the current and next/prev section on the viewport
   let currentSection = 0;
   let prevSection = 0;
+  let tempPrevSection = 0;
 
   // Set properties of section in viewport using GSAP on first page load
   gsap.set(sections[currentSection], {
@@ -122,14 +123,20 @@ const init = () => {
       toggleImageProps(prevSection === 0 ? "prev" : "current");
     }
 
+
+    tempPrevSection = prevSection;
+
+    prevSection = currentSection;
+
+
     prevTimeline
       .to(
-        sections[prevSection].querySelectorAll("h1"),
+        sections[tempPrevSection].querySelectorAll("h1"),
         {
           y: 100,
           duration: ELEMENT_DURATION,
           onComplete: () => {
-            if (prevSection === 4) {
+            if (tempPrevSection === 4) {
               toggleContentBackground("prev");
             }
           },
@@ -137,7 +144,7 @@ const init = () => {
         0
       )
       .to(
-        sections[prevSection].querySelector("p"),
+        sections[tempPrevSection].querySelector("p"),
         {
           y: 100,
           opacity: 0,
@@ -146,12 +153,12 @@ const init = () => {
         0
       )
       .to(
-        sections[prevSection].querySelector(".image-wrapper .hand-and-phone"),
+        sections[tempPrevSection].querySelector(".image-wrapper .hand-and-phone"),
         {
           rotate: 0,
           duration: 0.5,
           onComplete: () => {
-            if (prevSection === 1) {
+            if (tempPrevSection === 1) {
               toggleCircles("prev");
             }
           },
@@ -159,7 +166,7 @@ const init = () => {
         0.5
       )
       .to(
-        sections[prevSection].querySelector(".image-wrapper"),
+        sections[tempPrevSection].querySelector(".image-wrapper"),
         {
           y: 100,
           opacity: 0,
@@ -169,7 +176,7 @@ const init = () => {
         0.5
       )
       .to(
-        sections[prevSection],
+        sections[tempPrevSection],
         {
           opacity: 0,
           duration: ELEMENT_DURATION,
@@ -227,10 +234,7 @@ const init = () => {
             if (currentSection === 1) {
               toggleCircles("current");
             }
-          },
-          onComplete: () => {
-            prevSection = currentSection;
-          },
+          }
         },
         ">"
       )
