@@ -19,7 +19,6 @@ const init = () => {
   // Swaps the current and next/prev section on the viewport
   let currentSection = 0;
   let prevSection = 0;
-  let tempPrevSection = 0;
 
   // Set properties of section in viewport using GSAP on first page load
   gsap.set(sections[currentSection], {
@@ -125,6 +124,128 @@ const init = () => {
     circleTimeline.play();
   };
 
+  const sectionOutAnim = (sectionIndex) => {
+    return gsap
+      .timeline()
+      .to(
+        sections[sectionIndex].querySelectorAll("h1"),
+        {
+          y: 100,
+          duration: ELEMENT_DURATION,
+          onComplete: () => {
+            if (sectionIndex === 4) {
+              toggleContentBackground("prev");
+            }
+          },
+        },
+        0
+      )
+      .to(
+        sections[sectionIndex].querySelector("p"),
+        {
+          y: 100,
+          opacity: 0,
+          duration: ELEMENT_DURATION,
+        },
+        0
+      )
+      .to(
+        sections[sectionIndex].querySelector(".image-wrapper .hand-and-phone"),
+        {
+          rotate: 0,
+          duration: 0.5,
+          onComplete: () => {
+            if (sectionIndex === 1) {
+              toggleCircles("prev");
+            }
+          },
+        },
+        0.5
+      )
+      .to(
+        sections[sectionIndex].querySelector(".image-wrapper"),
+        {
+          y: 100,
+          opacity: 0,
+          ease: "power4.out",
+          duration: 1,
+        },
+        0.5
+      )
+      .to(
+        sections[sectionIndex],
+        {
+          opacity: 0,
+          duration: ELEMENT_DURATION,
+        },
+        ">"
+      );
+  };
+
+  const sectionInAnim = (sectionIndex) => {
+    return gsap
+      .timeline()
+      .to(
+        sections[sectionIndex],
+        {
+          opacity: 1,
+          duration: ELEMENT_DURATION,
+        },
+        ">+0.5"
+      )
+      .to(
+        sections[sectionIndex].querySelectorAll("h1"),
+        {
+          y: 0,
+          duration: ELEMENT_DURATION,
+          onStart: () => {
+            if (sectionIndex === 4) {
+              toggleContentBackground("curr");
+            }
+          },
+        },
+        ">"
+      )
+      .to(
+        sections[sectionIndex].querySelector("p"),
+        {
+          keyframes: [
+            { y: 0, duration: ELEMENT_DURATION },
+            {
+              opacity: 1,
+              duration: ELEMENT_DURATION,
+              delay: -ELEMENT_DURATION,
+            },
+          ],
+        },
+        ">"
+      )
+      .to(
+        sections[sectionIndex].querySelector(".image-wrapper"),
+        {
+          opacity: 1,
+          y: 0,
+          ease: "power4.out",
+          // opacity: 1,
+          duration: 1,
+          onStart: () => {
+            if (sectionIndex === 1) {
+              toggleCircles("current");
+            }
+          },
+        },
+        ">"
+      )
+      .to(
+        sections[sectionIndex].querySelector(".image-wrapper .hand-and-phone"),
+        {
+          rotate: -15,
+          duration: 0.5,
+        },
+        ">-1"
+      );
+  };
+
   const animateSections = () => {
     const timeline = gsap.timeline();
 
@@ -144,125 +265,9 @@ const init = () => {
 
     prevSection = currentSection;
 
-    prevTimeline
-      .to(
-        sections[tempPrevSection].querySelectorAll("h1"),
-        {
-          y: 100,
-          duration: ELEMENT_DURATION,
-          onComplete: () => {
-            if (tempPrevSection === 4) {
-              toggleContentBackground("prev");
-            }
-          },
-        },
-        0
-      )
-      .to(
-        sections[tempPrevSection].querySelector("p"),
-        {
-          y: 100,
-          opacity: 0,
-          duration: ELEMENT_DURATION,
-        },
-        0
-      )
-      .to(
-        sections[tempPrevSection].querySelector(
-          ".image-wrapper .hand-and-phone"
-        ),
-        {
-          rotate: 0,
-          duration: 0.5,
-          onComplete: () => {
-            if (tempPrevSection === 1) {
-              toggleCircles("prev");
-            }
-          },
-        },
-        0.5
-      )
-      .to(
-        sections[tempPrevSection].querySelector(".image-wrapper"),
-        {
-          y: 100,
-          opacity: 0,
-          ease: "power4.out",
-          duration: 1,
-        },
-        0.5
-      )
-      .to(
-        sections[tempPrevSection],
-        {
-          opacity: 0,
-          duration: ELEMENT_DURATION,
-        },
-        ">"
-      );
-
-    currentTimeline
-      .to(
-        sections[currentSection],
-        {
-          opacity: 1,
-          duration: ELEMENT_DURATION,
-        },
-        ">+0.5"
-      )
-      .to(
-        sections[currentSection].querySelectorAll("h1"),
-        {
-          y: 0,
-          duration: ELEMENT_DURATION,
-          onStart: () => {
-            if (currentSection === 4) {
-              toggleContentBackground("curr");
-            }
-          },
-        },
-        ">"
-      )
-      .to(
-        sections[currentSection].querySelector("p"),
-        {
-          keyframes: [
-            {y: 0,
-            duration: ELEMENT_DURATION},
-            {opacity: 1, duration: ELEMENT_DURATION, delay: -ELEMENT_DURATION}
-          ]
-          
-        },
-        ">"
-      )
-      .to(
-        sections[currentSection].querySelector(".image-wrapper"),
-        {
-          opacity: 1,
-          y: 0,
-          ease: "power4.out",
-          // opacity: 1,
-          duration: 1,
-          onStart: () => {
-            if (currentSection === 1) {
-              toggleCircles("current");
-            }
-          },
-        },
-        ">"
-      )
-      .to(
-        sections[currentSection].querySelector(
-          ".image-wrapper .hand-and-phone"
-        ),
-        {
-          rotate: -15,
-          duration: 0.5,
-        },
-        ">-1"
-      );
-
-    timeline.add(prevTimeline).add(currentTimeline);
+    timeline
+      .add(sectionOutAnim(tempPrevSection))
+      .add(sectionInAnim(currentSection));
   };
 
   const setProgress = () => {
