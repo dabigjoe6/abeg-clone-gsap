@@ -3,7 +3,7 @@ gsap.registerPlugin(ScrollToPlugin);
 
 const init = () => {
   const ELEMENT_DURATION = 0.05;
-  window.scrollTo({top: 0})
+  window.scrollTo({ top: 0 });
 
   // Elements
   const sections = document.querySelectorAll(".sections");
@@ -34,6 +34,23 @@ const init = () => {
     y: 0,
     opacity: 1,
   });
+
+  gsap.set(sections[currentSection].querySelector(".image-wrapper"), {
+    y: "100px",
+  });
+
+  Array.from(sections)
+    .slice(1)
+    .forEach((section) => {
+      gsap.set(section.querySelectorAll("h1"), {
+        y: 100,
+      });
+
+      gsap.set(section.querySelector("p"), {
+        y: 100,
+        opacity: 0,
+      });
+    });
 
   circles.forEach((circle, index) => {
     gsap.set(circle, {
@@ -123,11 +140,9 @@ const init = () => {
       toggleImageProps(prevSection === 0 ? "prev" : "current");
     }
 
-
     tempPrevSection = prevSection;
 
     prevSection = currentSection;
-
 
     prevTimeline
       .to(
@@ -153,7 +168,9 @@ const init = () => {
         0
       )
       .to(
-        sections[tempPrevSection].querySelector(".image-wrapper .hand-and-phone"),
+        sections[tempPrevSection].querySelector(
+          ".image-wrapper .hand-and-phone"
+        ),
         {
           rotate: 0,
           duration: 0.5,
@@ -234,7 +251,7 @@ const init = () => {
             if (currentSection === 1) {
               toggleCircles("current");
             }
-          }
+          },
         },
         ">"
       )
@@ -307,8 +324,8 @@ const init = () => {
     });
   });
 
-  gsap.set('.lines', {x: '-5%'})
-  const scrollAnim = gsap.to(".lines",{ x: "-50%", ease: "none"});
+  gsap.set(".lines", { x: "-5%" });
+  const scrollAnim = gsap.to(".lines", { x: "-50%", ease: "none" });
 
   ScrollTrigger.create({
     trigger: ".container",
