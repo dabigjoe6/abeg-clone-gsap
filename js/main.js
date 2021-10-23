@@ -226,18 +226,14 @@ const init = () => {
       .to(
         sections[currentSection].querySelector("p"),
         {
-          y: 0,
-          duration: ELEMENT_DURATION,
+          keyframes: [
+            {y: 0,
+            duration: ELEMENT_DURATION},
+            {opacity: 1, duration: ELEMENT_DURATION, delay: -ELEMENT_DURATION}
+          ]
+          
         },
         ">"
-      )
-      .to(
-        sections[currentSection].querySelector("p"),
-        {
-          opacity: 1,
-          duration: ELEMENT_DURATION,
-        },
-        `>-${ELEMENT_DURATION}`
       )
       .to(
         sections[currentSection].querySelector(".image-wrapper"),
