@@ -308,10 +308,10 @@ const init = () => {
       ease: "elastic.out(1.75, 0.3)",
       onStart: () => {
         enableScroll(); // Enable scroll on animation start
-        setTimeout(() => {
+        gsap.delayedCall(0.85, () => {
           disableScroll();
           animateSections();
-        }, 850);
+        });
       },
     });
   };
