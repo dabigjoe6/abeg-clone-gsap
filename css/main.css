@@ -48,7 +48,7 @@ img {
 
   .container {
     width: 100vw;
-    height: 200vh;
+    height: 150vh;
     display: flex;
     flex-direction: column;
     padding-top: 15vh;
