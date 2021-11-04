@@ -5,9 +5,13 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   background: #0f292e;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  max-width: 100vw;
+  max-height: 100vh;
   color: white;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .mobile-view {

@@ -333,7 +333,7 @@ const init = () => {
     animation: scrollAnim,
     pin: true,
     scrub: 1,
-    pinSpacing: false,
+    // pinSpacing: false,
     anticipatePin: 1,
   });
 };
