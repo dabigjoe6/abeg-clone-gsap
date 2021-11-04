@@ -332,9 +332,9 @@ const init = () => {
     trigger: ".container",
     animation: scrollAnim,
     pin: true,
-    scrub: 1,
+    scrub: 0.6,
     // pinSpacing: false,
-    anticipatePin: 1,
+    // anticipatePin: 1,
   });
 };
 
