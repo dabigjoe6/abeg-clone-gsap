@@ -251,9 +251,6 @@ const init = () => {
 
     timeline.timeScale(2);
 
-    const prevTimeline = gsap.timeline();
-    const currentTimeline = gsap.timeline();
-
     dots[prevSection].classList.remove("active");
     dots[currentSection].classList.add("active");
 
@@ -332,9 +329,7 @@ const init = () => {
     trigger: ".container",
     animation: scrollAnim,
     pin: true,
-    scrub: 0.6,
-    // pinSpacing: false,
-    // anticipatePin: 1,
+    scrub: 0.6
   });
 };
 
